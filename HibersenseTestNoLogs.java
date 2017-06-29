@@ -2,6 +2,9 @@ import static org.junit.Assert.*;
 
 import java.util.logging.*;
 
+
+import java.util.concurrent.TimeUnit;
+
 import org.junit.*;
 import org.openqa.selenium.*;
 
@@ -48,11 +51,11 @@ public class HibersenseTestNoLogs {
 	
     }
     
-    
-    // Start at the home page for reddit for each test
+    //Test 1
+    // Start at the home page for Hibersense for each test
     @Before
     public void setUp() throws Exception {
-	driver.get("https://www.Hibersense.com");
+	driver.get("https://www.Hibersense.com/access/login");
     }
 
     // Given that I am on the main page
@@ -66,7 +69,36 @@ public class HibersenseTestNoLogs {
 	String title = driver.getTitle();
 	assertTrue(title.contains("Hibersense"));
     }
-	
+
+    //Test 2
+    // Given that I am on the main page
+    // And I am not logged in 
+    // When I try to login with an valid username and invalid password
+    // Then I am given the opportunity to reset the password
+    @Test
+    public void testBadPasswordResetLink() {
+		
+	// Enter username "meow", password "meow"
+
+	//find the input element
+	WebElement username = driver.findElement(By.xpath("//input[@type='email']"));
+	WebElement password = driver.findElement(By.xpath("//input[@type='password']"));
+		
+	username.sendKeys("student5@test.com");
+	password.sendKeys("student5");
+		
+	WebElement submitButton = driver.findElement(By.className("btn-login"));
+	submitButton.click();
+
+try{
+	TimeUnit.SECONDS.sleep(15);
+}
+catch(Exception E){}
+
+	String websiteurl = driver.Url;
+	assertEquals(websiteurl, "https://hibersense.com/access/view");
+
+	/*
     // Given that I am on the main page
     // When I view the header
     // Then I see that it contains "new", "rising", and "top" links
@@ -149,5 +181,7 @@ public class HibersenseTestNoLogs {
 	}
     }
 	
-
+*/
 }
+}
+
